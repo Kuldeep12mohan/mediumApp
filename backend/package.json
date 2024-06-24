@@ -5,6 +5,9 @@
     "deploy": "wrangler deploy --minify src/index.ts"
   },
   "dependencies": {
+    "@havoncom/medium-model": "^1.0.0",
+    "@prisma/client": "^5.15.1",
+    "@prisma/extension-accelerate": "^1.1.0",
     "hono": "^4.4.7",
     "prisma": "^5.15.1"
   },
