@@ -13,7 +13,7 @@ const Appbar = () => {
   return (
     <div className="flex justify-between items-center border-b px-10 py-4">
       <div className="text-xl">
-        <Link to="/blogs">Medium</Link>
+        <Link to="/">Medium</Link>
       </div>
       <div className="flex justify-between items-center">
         <Link to="/publish">

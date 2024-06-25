@@ -37,7 +37,7 @@ const Publish = () => {
               }
             })
             if(response){
-              navigate("/blogs")
+              navigate("/")
             }
 
             }}

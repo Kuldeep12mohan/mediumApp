@@ -58,7 +58,7 @@ const Auth = ({ type }: { type: "signin" | "signup" }) => {
       setLoader(false);
       setTimeout(()=>
       {
-        navigate("/blogs")
+        navigate("/")
       },1500)
     } catch (error) {
       console.log(error);
