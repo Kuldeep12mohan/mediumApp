@@ -1,4 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useUser } from "../hooks";
+import { useState } from "react";
 function Avatar({ authorName }: { authorName: string }) {
   return (
     <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 p-2">
@@ -10,6 +12,9 @@ function Avatar({ authorName }: { authorName: string }) {
 }
 
 const Appbar = () => {
+  const navigate = useNavigate();
+  const { user } = useUser();
+  const [logout,showLogout] = useState(false);
   return (
     <div className="flex justify-between items-center border-b px-10 py-4">
       <div className="text-xl">
@@ -24,8 +29,18 @@ const Appbar = () => {
             New Post
           </button>
         </Link>
-        <div>
-          <Avatar authorName="K" />
+        <div onClick={()=>
+          showLogout(!logout)
+        } className="hover:cursor-pointer relative">
+          <Avatar authorName={user?.name[0] || ""} />
+          {logout&&<div className="z-20 absolute top-9 right-2 border border-slate-600 py-2 px-4 rounded-lg hover:cursor-pointer bg-black text-white" onClick={()=>
+            {
+              localStorage.removeItem("token");
+              navigate("/signin")
+            }
+          }>
+            logout
+            </div>}
         </div>
       </div>
     </div>

@@ -8,9 +8,30 @@ export const userRouter = new Hono<{
   Bindings: {
     DATABASE_URL: string;
     JWT_SECRET: string;
-  };
+  },
+  Variables:{
+    userId:string
+  }
 }>();
 
+userRouter.use("/me", async (c, next) => {
+  try {
+    const header = c.req.header("Authorization") || "";
+    console.log(header);
+    if (!header) return next();
+    const user = await verify(header, c.env.JWT_SECRET);
+    if (user) {
+      //@ts-ignore
+      c.set("userId", user.id);
+      return next();
+    } else {
+      c.status(403);
+      return c.json({ error: "unauthorized" });
+    }
+  } catch (error) {
+    return c.text("invalid");
+  }
+});
 
 userRouter.post("/signup", async (c) => {
   const prisma = new PrismaClient({
@@ -75,7 +96,30 @@ userRouter.post("/signin", async (c) => {
   }
 });
 
-userRouter.get("/me",async(req,res)=>
+userRouter.get("/me",async(c)=>
 {
-  
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+  const authorId = c.get("userId");
+  console.log(authorId)
+  try {
+    const user = await prisma.user.findFirst({
+      where:{
+        id:authorId
+      },
+      select:{
+        id:true,
+        name:true,
+        email:true
+      }
+    });
+    c.status(200);
+    return c.json({
+      message: "user fetched successfully",
+      user
+    });
+  } catch (error) {
+    return c.text("invalid");
+  }
 })

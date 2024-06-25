@@ -149,3 +149,9 @@ blogRouter.get("/bulk", async (c) => {
     blogs,
   });
 });
+
+// blogRouter.delete("/delete/:id",async(c)=>
+// {
+//   const id = c.req.param("id");
+
+// })

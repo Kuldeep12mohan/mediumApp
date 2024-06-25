@@ -9,6 +9,11 @@ export interface Blog {
     name: string;
   };
 }
+export interface User{
+  id:string,
+  name:string,
+  email:string
+}
 
 export const useBlog = ({ id }:{ id:string }) => {
   const [loading, setLoading] = useState(true);
@@ -60,3 +65,21 @@ export const useBlogs = () => {
     blogs,
   };
 };
+
+export const useUser = ()=>
+  {
+    const [user,setUser] = useState<User>();
+    useEffect(()=>{
+      const fetchUser = async()=>{
+        const response = await axios.get(`${BACKEND_URL}/api/v1/user/me`,{
+          headers:{
+            Authorization:localStorage.getItem("token")
+          }
+        })
+        const data = response.data.user;
+        setUser(data);
+      }
+      fetchUser()
+    })
+    return {user}
+  }
