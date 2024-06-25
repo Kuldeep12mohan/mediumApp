@@ -1,5 +1,4 @@
 import Appbar from "./Appbar";
-import { Blog } from "../hooks";
 import { avatar } from "./BlogCard";
 function Avatar({ authorName }: avatar) {
   return (
@@ -11,7 +10,7 @@ function Avatar({ authorName }: avatar) {
   );
 }
 
-export const FullBlog = ({ blog }: { blog: Blog }) => {
+export const FullBlog = ({ blog }: { blog: any }) => {
   return (
     <div>
       <Appbar />
