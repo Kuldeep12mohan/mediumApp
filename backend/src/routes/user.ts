@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { decode, sign, verify } from "hono/jwt";
 import { signinInput,signupInput } from "@havoncom/medium-model";
+
 export const userRouter = new Hono<{
   Bindings: {
     DATABASE_URL: string;
@@ -16,7 +17,9 @@ userRouter.post("/signup", async (c) => {
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
   const body = await c.req.json();
+  console.log(body)
   const {success} = signupInput.safeParse(body);
+  console.log(success)
   if(!success){
     c.status(411);
     return c.json({
@@ -26,6 +29,7 @@ userRouter.post("/signup", async (c) => {
   try {
     const user = await prisma.user.create({
       data: {
+        name:body.name,
         email: body.email,
         password: body.password,
       },
@@ -70,3 +74,8 @@ userRouter.post("/signin", async (c) => {
     return c.text("invalid");
   }
 });
+
+userRouter.get("/me",async(req,res)=>
+{
+  
+})

@@ -17,13 +17,12 @@ blogRouter.use("/*", async (c, next) => {
   try {
     const header = c.req.header("Authorization") || "";
     console.log(header);
-    if (!header) return c.text("invalid access");
-    const token = header.split(" ")[1];
-    const user = await verify(token, c.env.JWT_SECRET);
+    if (!header) return next();
+    const user = await verify(header, c.env.JWT_SECRET);
     if (user) {
       //@ts-ignore
       c.set("userId", user.id);
-      await next();
+      return next();
     } else {
       c.status(403);
       return c.json({ error: "unauthorized" });
@@ -106,6 +105,16 @@ blogRouter.get("/get/:id", async (c) => {
       where: {
         id: String(id),
       },
+      select:{
+        id:true,
+        content:true,
+        title:true,
+        author:{
+          select:{
+            name:true
+          }
+        }
+      }
     });
     return c.json({
       blog,
@@ -123,7 +132,18 @@ blogRouter.get("/bulk", async (c) => {
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
 
-  const blogs = await prisma.blog.findMany();
+  const blogs = await prisma.blog.findMany({
+    select:{
+      id:true,
+      content:true,
+      title:true,
+      author:{
+        select:{
+          name:true
+        }
+      }
+    }
+  });
 
   return c.json({
     blogs,
