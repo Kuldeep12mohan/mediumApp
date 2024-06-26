@@ -63,6 +63,7 @@ const Auth = ({ type }: { type: "signin" | "signup" }) => {
     } catch (error) {
       console.log(error);
       alert("auth failed");
+      navigate("/");
     }
     
   };
