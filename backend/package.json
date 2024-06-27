@@ -6,13 +6,15 @@
   },
   "dependencies": {
     "@havoncom/medium-model": "^1.0.0",
-    "@prisma/client": "^5.15.1",
+    "@prisma/client": "^5.16.0",
     "@prisma/extension-accelerate": "^1.1.0",
-    "hono": "^4.4.7",
-    "prisma": "^5.15.1"
+    "bcrypt": "^5.1.1",
+    "hono": "^4.4.7"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240529.0",
+    "@types/bcrypt": "^5.0.2",
+    "prisma": "^5.16.0",
     "wrangler": "^3.57.2"
   }
 }

@@ -139,7 +139,8 @@ blogRouter.get("/bulk", async (c) => {
       title:true,
       author:{
         select:{
-          name:true
+          name:true,
+          id:true
         }
       }
     }
@@ -150,8 +151,25 @@ blogRouter.get("/bulk", async (c) => {
   });
 });
 
-// blogRouter.delete("/delete/:id",async(c)=>
-// {
-//   const id = c.req.param("id");
+blogRouter.delete("/delete/:id",async(c)=>
+{
+  const id = c.req.param("id");
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+  try {
+    const response = await prisma.blog.delete({
+      where:{
+        id:id,
+      }
+    })
+    c.status(200)
+    return c.json({
+      message:"blog delete successfully"
+    })
+  } catch (error) {
+    c.status(404);
+    return c.text("problem in deleting the post")
+  }
 
-// })
+})

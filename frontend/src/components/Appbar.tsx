@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useUser } from "../hooks";
+// import { useUser } from "../hooks";
 import { useState } from "react";
 function Avatar({ authorName }: { authorName: string }) {
   return (
@@ -13,7 +13,7 @@ function Avatar({ authorName }: { authorName: string }) {
 
 const Appbar = () => {
   const navigate = useNavigate();
-  const { user } = useUser();
+  // const { user } = useUser();
   const [logout,showLogout] = useState(false);
   return (
     <div className="flex justify-between items-center border-b px-10 py-4">
@@ -32,14 +32,22 @@ const Appbar = () => {
         <div onClick={()=>
           showLogout(!logout)
         } className="hover:cursor-pointer relative">
-          <Avatar authorName={user?.name[0] || ""} />
-          {logout&&<div className="z-20 absolute top-9 right-2 border border-slate-600 py-2 px-4 rounded-lg hover:cursor-pointer bg-black text-white" onClick={()=>
+          <Avatar authorName={localStorage.getItem("username")?.charAt(0) || ""} />
+          {logout&&<div className="z-20 absolute top-10 right-2 border bg-black border-slate-600 py-3 rounded-lg hover:cursor-pointer">
+            <div className="text-white hover:cursor-pointer hover:bg-white hover:text-black w-full px-5 py-2 " onClick={()=>
+              {
+                navigate("/profile")
+              }
+            }>profile</div>
+            <div className="text-white hover:cursor-pointer hover:bg-white hover:text-black w-full px-5 py-2" onClick={()=>
             {
               localStorage.removeItem("token");
+              localStorage.removeItem("username");
+              localStorage.removeItem("userId")
+              localStorage.removeItem("description")
               navigate("/signin")
             }
-          }>
-            logout
+          }>logout</div>
             </div>}
         </div>
       </div>

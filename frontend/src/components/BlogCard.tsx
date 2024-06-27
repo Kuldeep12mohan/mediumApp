@@ -16,7 +16,7 @@ const BlogCard = ({
 }: blogCardProps) => {
   return (
     <Link to={`/blog/${id}`}>
-      <div className="border-b border-slate-200 p-4">
+      <div className=" p-4">
         <div className="flex items-center text-sm">
           <Avatar authorName={`${authorName.split(" ")[0][0].toUpperCase()}`} />
           <span className="font-extralight pl-2">{authorName}</span>{" "}

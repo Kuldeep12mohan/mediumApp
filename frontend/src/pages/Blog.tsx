@@ -1,6 +1,6 @@
 import { useBlog } from "../hooks";
 import { useParams } from "react-router-dom";
-import { FullBlog } from "../components/FullBlog";
+import FullBlog from "../components/FullBlog";
 const Blog = () => {
   const { id } = useParams();
   console.log("id", id);

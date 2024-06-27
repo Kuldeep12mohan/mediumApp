@@ -7,6 +7,7 @@ export interface Blog {
   title: string;
   author: {
     name: string;
+    id:string
   };
 }
 export interface User{
@@ -66,20 +67,3 @@ export const useBlogs = () => {
   };
 };
 
-export const useUser = ()=>
-  {
-    const [user,setUser] = useState<User>();
-    useEffect(()=>{
-      const fetchUser = async()=>{
-        const response = await axios.get(`${BACKEND_URL}/api/v1/user/me`,{
-          headers:{
-            Authorization:localStorage.getItem("token")
-          }
-        })
-        const data = response.data.user;
-        setUser(data);
-      }
-      fetchUser()
-    })
-    return {user}
-  }

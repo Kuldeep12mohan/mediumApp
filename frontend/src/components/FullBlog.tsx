@@ -10,18 +10,18 @@ function Avatar({ authorName }: avatar) {
   );
 }
 
-export const FullBlog = ({ blog }: { blog: any }) => {
+const FullBlog = ({ blog }: { blog: any }) => {
   return (
     <div>
       <Appbar />
       <div className="flex justify-center">
         <div className="grid grid-cols-12 px-10 w-full pt-200 max-w-screen-xl pt-10">
-          <div className="col-span-8 ">
-            <div className="text-4xl font-extrabold w-4/5">{blog.title}</div>
-            <div className="text-slate-500 pt-2 w-4/5">Posted on 2nd December</div>
+          <div className="col-span-12 md:col-span-8 ">
+            <div className="text-4xl font-extrabold w-full">{blog.title}</div>
+            <div className="text-slate-500 pt-2 w-full">Posted on 2nd December</div>
             <div className="pt-4 w-4/5">{blog.content}</div>
           </div>
-          <div className="col-span-4">
+          <div className="md:col-span-4 md:block hidden">
            <div className="text-lg text-slate-600">Author</div>
             <div className="flex justify-center items-center pt-1">
               <div className="pr-2">
@@ -41,3 +41,4 @@ export const FullBlog = ({ blog }: { blog: any }) => {
     </div>
   );
 };
+export default FullBlog
