@@ -13,6 +13,7 @@ function Avatar({ authorName }: { authorName: string }) {
 }
 
 const Appbar = () => {
+  const [username,setUsername] = useState("");
   useEffect(() => {
     const fetchUser = async () => {
       const response = await axios.get(`${BACKEND_URL}/api/v1/user/me`, {
@@ -22,6 +23,7 @@ const Appbar = () => {
       });
       localStorage.setItem("username",response.data.user.name);
       localStorage.setItem("userId",response.data.user.id);
+      setUsername(response.data.user.name);
     };
     fetchUser();
   }, []);
@@ -47,7 +49,7 @@ const Appbar = () => {
           onClick={() => showLogout(!logout)}
           className="hover:cursor-pointer relative"
         >
-          <Avatar authorName={localStorage.getItem("username")?.charAt(0)||""} />
+          <Avatar authorName={localStorage.getItem("username")?.charAt(0)||username} />
           {logout && (
             <div className="z-20 absolute top-10 right-2 border bg-black border-slate-600 py-3 rounded-lg hover:cursor-pointer">
               <div
