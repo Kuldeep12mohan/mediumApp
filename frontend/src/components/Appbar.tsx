@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
-// import { useUser } from "../hooks";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 function Avatar({ authorName }: { authorName: string }) {
   return (
     <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 p-2">
@@ -13,8 +13,16 @@ function Avatar({ authorName }: { authorName: string }) {
 
 const Appbar = () => {
   const navigate = useNavigate();
-  // const { user } = useUser();
-  const [logout,showLogout] = useState(false);
+  const [logout, showLogout] = useState(false);
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+  }, []);
+
   return (
     <div className="flex justify-between items-center border-b px-10 py-4">
       <div className="text-xl">
@@ -29,26 +37,35 @@ const Appbar = () => {
             New Post
           </button>
         </Link>
-        <div onClick={()=>
-          showLogout(!logout)
-        } className="hover:cursor-pointer relative">
-          <Avatar authorName={localStorage.getItem("username")?.charAt(0) || ""} />
-          {logout&&<div className="z-20 absolute top-10 right-2 border bg-black border-slate-600 py-3 rounded-lg hover:cursor-pointer">
-            <div className="text-white hover:cursor-pointer hover:bg-white hover:text-black w-full px-5 py-2 " onClick={()=>
-              {
-                navigate("/profile")
-              }
-            }>profile</div>
-            <div className="text-white hover:cursor-pointer hover:bg-white hover:text-black w-full px-5 py-2" onClick={()=>
-            {
-              localStorage.removeItem("token");
-              localStorage.removeItem("username");
-              localStorage.removeItem("userId")
-              localStorage.removeItem("description")
-              navigate("/signin")
-            }
-          }>logout</div>
-            </div>}
+        <div
+          onClick={() => showLogout(!logout)}
+          className="hover:cursor-pointer relative"
+        >
+          <Avatar authorName={username.charAt(0)} />
+          {logout && (
+            <div className="z-20 absolute top-10 right-2 border bg-black border-slate-600 py-3 rounded-lg hover:cursor-pointer">
+              <div
+                className="text-white hover:cursor-pointer hover:bg-white hover:text-black w-full px-5 py-2"
+                onClick={() => {
+                  navigate("/profile");
+                }}
+              >
+                Profile
+              </div>
+              <div
+                className="text-white hover:cursor-pointer hover:bg-white hover:text-black w-full px-5 py-2"
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  localStorage.removeItem("username");
+                  localStorage.removeItem("userId");
+                  localStorage.removeItem("description");
+                  navigate("/signin");
+                }}
+              >
+                Logout
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
