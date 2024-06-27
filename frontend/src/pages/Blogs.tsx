@@ -4,24 +4,7 @@ import { useBlogs } from "../hooks";
 import { BlogSkeleton } from "../components/BlogSkeleton";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import axios from "axios";
-import { BACKEND_URL } from "../config";
 const Blogs = () => {
-  useEffect(() => {
-    const fetchUser = async () => {
-      const response = await axios.get(`${BACKEND_URL}/api/v1/user/me`, {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      });
-      const logo = response.data.user.name;
-      if (localStorage.getItem("token")) {
-        localStorage.setItem("username", logo);
-        localStorage.setItem("userId", response.data.user.id);
-      }
-    };
-    fetchUser();
-  }, []);
   const navigate = useNavigate();
   useEffect(() => {
     if (!localStorage.getItem("token")) {

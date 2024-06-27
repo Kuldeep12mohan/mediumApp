@@ -56,6 +56,7 @@ const Auth = ({ type }: { type: "signin" | "signup" }) => {
       });
       toast.success(`${type==="signin"?"Sign in successful":"Sign up successful"}`)
       setLoader(false);
+      console.log(response)
       setTimeout(()=>
       {
         navigate("/")
