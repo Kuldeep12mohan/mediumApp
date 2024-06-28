@@ -34,7 +34,7 @@ const Appbar = () => {
   return (
     <div className="flex justify-between items-center border-b px-10 py-4">
       <div className="text-xl">
-        <Link to="/">Medium</Link>
+        <Link to="/">Bloggify</Link>
       </div>
       <div className="flex justify-between items-center">
         <Link to="/publish">
@@ -67,6 +67,7 @@ const Appbar = () => {
                   localStorage.removeItem("username");
                   localStorage.removeItem("userId");
                   localStorage.removeItem("description");
+                  localStorage.removeItem("profile")
                   navigate("/signin");
                 }}
               >

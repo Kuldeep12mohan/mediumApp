@@ -21,7 +21,6 @@ function App() {
       <Route path="/profile" element={<Profile/>}/>
       <Route path="/edit-profile" element={<Edit/>}/>
       <Route path="/editBlog/:id" element={<EditBlog/>}/>
-
     </Routes>
     </BrowserRouter>
     </>

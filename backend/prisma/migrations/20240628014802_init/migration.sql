@@ -5,6 +5,7 @@ CREATE TABLE "User" (
     "name" TEXT,
     "description" TEXT,
     "password" TEXT NOT NULL,
+    "profileURL" TEXT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );

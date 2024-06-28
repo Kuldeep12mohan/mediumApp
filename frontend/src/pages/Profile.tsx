@@ -25,8 +25,7 @@ const Profile = () => {
             <div>
               <img
                 className="w-40 h-40 rounded-full"
-                src="https://img.freepik.com/free-photo/portrait-man-having-great-time_23-2149443790.jpg"
-                alt="Rounded avatar"
+                src={localStorage.getItem("profile")||"https://img.freepik.com/free-photo/portrait-man-having-great-time_23-2149443790.jpg"}
               />
             </div>
             <div className="text-3xl font-bold mt-2">

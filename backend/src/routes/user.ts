@@ -122,7 +122,6 @@ userRouter.get("/me", async (c) => {
     return c.text("invalid");
   }
 });
-
 userRouter.get("/me/blogs", async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
@@ -138,42 +137,42 @@ userRouter.get("/me/blogs", async (c) => {
       },
     });
     c.status(200);
-    return c.json( blogs );
+    return c.json(blogs);
   } catch (error) {
     c.status(401);
     return c.text("invalid request for blogs");
   }
 });
-userRouter.patch("/me/update",async(c)=>{
+userRouter.patch("/me/update", async (c) => {
   const body = await c.req.json();
   console.log(body);
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
   const authorId = c.get("userId");
- try {
-   const response = await prisma.user.update({
-     where:{
-       id:authorId
-     },
-     data:{
-       name:body.name,
-       description:body.description
-     },
-     select:{
-      name:true,
-      description:true
-     }
-     
-   })
-   c.status(200);
-   return c.json({
-    response,
-    message:"info updated"
-   })
- } catch (error) {
-  c.status(401);
-  return c.text("something wrong in updating profile");
-  
- }
-})
+  try {
+    const response = await prisma.user.update({
+      where: {
+        id: authorId,
+      },
+      data: {
+        name: body.name,
+        description: body.description,
+        profileURL:body.imageUrl
+      },
+      select: {
+        name: true,
+        description: true,
+        profileURL:true
+      },
+    });
+    c.status(200);
+    return c.json({
+      response,
+      message: "info updated",
+    });
+  } catch (error) {
+    c.status(401);
+    return c.text("something wrong in updating profile");
+  }
+});

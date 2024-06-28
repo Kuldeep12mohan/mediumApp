@@ -2,8 +2,30 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
-
 export const Edit = () => {
+  const [imageUrl,setImageUrl] = useState("");
+  const handleImageUpload = async (event:any) => {
+    const formData = new FormData();
+    const file = event.target.files[0];
+    formData.append("file", file);
+    formData.append("upload_preset", "gacqpnmt"); 
+
+    try {
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/dbkmmin3x/image/upload`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const data = await response.json();
+      console.log(data.secure_url);
+      setImageUrl(data.secure_url);
+      localStorage.setItem("profile",data.secure_url);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
   const [name, setName] = useState("");
@@ -18,7 +40,7 @@ export const Edit = () => {
     setLoader(true);
     const response = await axios.patch(
       `${BACKEND_URL}/api/v1/user/me/update`,
-      { name, description },
+      { name, description,imageUrl },
       {
         headers: {
           Authorization: localStorage.getItem("token"),
@@ -49,6 +71,19 @@ export const Edit = () => {
           placeholder="Enter your name"
           value={name}
           onChange={(e) => setName(e.target.value)}
+        />
+        <label
+          htmlFor="image"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Image
+        </label>
+        <input
+          id="image"
+          className="w-full border border-gray-300 rounded-lg py-2 px-4 mb-4 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          type="file"
+          placeholder="Enter your file"
+          onChange={handleImageUpload}
         />
         <label
           htmlFor="description"
