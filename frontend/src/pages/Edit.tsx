@@ -37,6 +37,9 @@ export const Edit = () => {
 
   const updateProfile = async () => {
     setLoader(true);
+    if(!imageUrl){alert("image uploading problem try some time later");
+      return;
+    }
     const response = await axios.patch(
       `${BACKEND_URL}/api/v1/user/me/update`,
       { name, description,imageUrl },
