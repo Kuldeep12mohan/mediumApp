@@ -23,6 +23,7 @@ const Appbar = () => {
       });
       localStorage.setItem("username",response.data.user.name);
       localStorage.setItem("userId",response.data.user.id);
+      localStorage.setItem("profile",response.data.user.profileURL)
       setUsername(response.data.user.name);
     };
     fetchUser();

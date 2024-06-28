@@ -111,6 +111,7 @@ userRouter.get("/me", async (c) => {
         id: true,
         name: true,
         email: true,
+        profileURL:true
       },
     });
     c.status(200);
