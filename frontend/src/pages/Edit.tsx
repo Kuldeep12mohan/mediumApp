@@ -21,7 +21,6 @@ export const Edit = () => {
       const data = await response.json();
       console.log(data.secure_url);
       setImageUrl(data.secure_url);
-      localStorage.setItem("profile",data.secure_url);
     } catch (error) {
       console.log(error);
     }
