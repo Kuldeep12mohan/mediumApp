@@ -4,6 +4,11 @@ import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
 export const Edit = () => {
   const [imageUrl,setImageUrl] = useState("");
+  const [loader, setLoader] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
   const handleImageUpload = async (event:any) => {
     const formData = new FormData();
     const file = event.target.files[0];
@@ -21,15 +26,11 @@ export const Edit = () => {
       const data = await response.json();
       console.log(data.secure_url);
       setImageUrl(data.secure_url);
+      setIsButtonDisabled(false);
     } catch (error) {
       console.log(error);
     }
   };
-  const [loader, setLoader] = useState(false);
-  const navigate = useNavigate();
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-
   useEffect(() => {
     setName(localStorage.getItem("username") || "");
     setDescription(localStorage.getItem("description") || "");
@@ -52,6 +53,7 @@ export const Edit = () => {
     console.log(response.data);
     localStorage.setItem("username", response.data.response.name);
     localStorage.setItem("description", response.data.response.description);
+    localStorage.setItem("profile",response.data.response.profileURL);
     setLoader(false);
     navigate("/profile");
   };
@@ -103,6 +105,7 @@ export const Edit = () => {
         />
         <button
           onClick={updateProfile}
+          disabled={isButtonDisabled}
           className="w-full bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300"
         >
           {loader ? (

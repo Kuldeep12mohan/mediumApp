@@ -4,21 +4,7 @@ import BlogCard from "../components/BlogCard";
 import { useBlogs } from "../hooks";
 import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 const Profile = () => {
-  const [image,setImage] = useState("");
-  useEffect(() => {
-    const fetchUser = async () => {
-      const response = await axios.get(`${BACKEND_URL}/api/v1/user/me`, {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      });
-      console.log("url",response.data.user.profileURL)
-      setImage(response.data.user.profileURL)
-    };
-    fetchUser();
-  }, []);
   const navigate = useNavigate();
   const deleteBlog = async (id:string) => {
     console.log(id);
@@ -39,7 +25,7 @@ const Profile = () => {
             <div>
               <img
                 className="w-40 h-40 rounded-full"
-                src={image||"https://c8.alamy.com/comp/PH4JDM/avatar-icon-avatar-flat-symbol-isolated-on-white-background-avatar-simple-icon-avatar-abstract-icon-in-black-vector-illustration-for-graphic-desig-PH4JDM.jpg"}
+                src={localStorage.getItem("profile")||"https://c8.alamy.com/comp/PH4JDM/avatar-icon-avatar-flat-symbol-isolated-on-white-background-avatar-simple-icon-avatar-abstract-icon-in-black-vector-illustration-for-graphic-desig-PH4JDM.jpg"}
               />
             </div>
             <div className="text-3xl font-bold mt-2">

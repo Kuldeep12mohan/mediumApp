@@ -24,6 +24,7 @@ const Appbar = () => {
       console.log("url",response.data.user.profileURL)
       localStorage.setItem("username",response.data.user.name);
       localStorage.setItem("userId",response.data.user.id);
+      localStorage.setItem("profile",response.data.user.profileURL);
       setUsername(response.data.user.name);
     };
     fetchUser();
