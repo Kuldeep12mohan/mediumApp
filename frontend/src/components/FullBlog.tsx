@@ -1,6 +1,6 @@
 import Appbar from "./Appbar";
 import { avatar } from "./BlogCard";
-import { Blog, formatDate } from "../hooks";
+import {  formatDate } from "../hooks";
 function Avatar({ authorName }: avatar) {
   return (
     <div className="relative inline-flex items-center justify-center w-9 h-9 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 p-2">
@@ -11,7 +11,7 @@ function Avatar({ authorName }: avatar) {
   );
 }
 
-const FullBlog = ({ blog }: { blog: Blog }) => {
+const FullBlog = ({ blog }: { blog: any }) => {
   return (
     <div>
       <Appbar />
