@@ -50,6 +50,7 @@ blogRouter.post("/post", async (c) => {
         title: body.title,
         content: body.content,
         authorId: String(authorId),
+        publishedDate:new Date()
       },
     });
     c.status(200);
@@ -83,6 +84,7 @@ blogRouter.put("/update", async (c) => {
       data: {
         title: body.title,
         content: body.content,
+        publishedDate:new Date()
       },
     });
     return c.json({
@@ -109,6 +111,7 @@ blogRouter.get("/get/:id", async (c) => {
         id:true,
         content:true,
         title:true,
+        publishedDate:true,
         author:{
           select:{
             name:true
@@ -137,6 +140,7 @@ blogRouter.get("/bulk", async (c) => {
       id:true,
       content:true,
       title:true,
+      publishedDate:true,
       author:{
         select:{
           name:true,

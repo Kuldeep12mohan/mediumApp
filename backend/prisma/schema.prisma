@@ -8,13 +8,13 @@ datasource db {
 }
 
 model User {
-  id          String  @id @default(uuid())
-  email       String  @unique
-  name        String?
-  description String?
-  password    String
-  profileURL  String?
-  blogs       Blog[]
+  id            String  @id @default(uuid())
+  email         String  @unique
+  name          String?
+  description   String?
+  password      String
+  profileURL    String?
+  blogs         Blog[]
 }
 
 model Blog {

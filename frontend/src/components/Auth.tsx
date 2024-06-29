@@ -48,7 +48,12 @@ const Auth = ({ type }: { type: "signin" | "signup" }) => {
         postInputs
       );
       const jwt = response.data.jwt;
+      console.log("userData",response);
       localStorage.setItem("token", jwt);
+      localStorage.setItem("username",response.data.user.name);
+      localStorage.setItem("description",response.data.user.description);
+      localStorage.setItem("profile",response.data.user.profileURL);
+      localStorage.setItem("userId",response.data.user.id);
       setPostInputs({
         name: "",
         email: "",

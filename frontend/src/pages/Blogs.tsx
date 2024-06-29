@@ -4,8 +4,9 @@ import { useBlogs } from "../hooks";
 import { BlogSkeleton } from "../components/BlogSkeleton";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-
+import { formatDate } from "../hooks";
 const Blogs = () => {
+
   const navigate = useNavigate();
   useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -40,14 +41,13 @@ const Blogs = () => {
                   authorName={blog.author.name}
                   title={blog.title}
                   content={blog.content}
-                  publishedDate="Jan 9 2023"
+                  publishedDate={formatDate(blog.publishedDate)}
                 />
               </div>
             ))}
           </div>
         </div>
       )}
-      <hr />
     </>
   );
 };

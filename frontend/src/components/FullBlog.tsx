@@ -1,5 +1,6 @@
 import Appbar from "./Appbar";
 import { avatar } from "./BlogCard";
+import { Blog, formatDate } from "../hooks";
 function Avatar({ authorName }: avatar) {
   return (
     <div className="relative inline-flex items-center justify-center w-9 h-9 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 p-2">
@@ -10,7 +11,7 @@ function Avatar({ authorName }: avatar) {
   );
 }
 
-const FullBlog = ({ blog }: { blog: any }) => {
+const FullBlog = ({ blog }: { blog: Blog }) => {
   return (
     <div>
       <Appbar />
@@ -18,7 +19,7 @@ const FullBlog = ({ blog }: { blog: any }) => {
         <div className="grid grid-cols-12 px-10 w-full pt-200 max-w-screen-xl pt-10">
           <div className="col-span-12 md:col-span-8 ">
             <div className="text-4xl font-extrabold w-full">{blog.title}</div>
-            <div className="text-slate-500 pt-2 w-full">Posted on 2nd December</div>
+            <div className="text-slate-500 pt-2 w-full">{`Posted on ${formatDate(blog.publishedDate)}`}</div>
             <div className="pt-4 w-4/5">{blog.content}</div>
           </div>
           <div className="md:col-span-4 md:block hidden">

@@ -4,6 +4,7 @@ import BlogCard from "../components/BlogCard";
 import { useBlogs } from "../hooks";
 import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
+import { formatDate } from "../hooks";
 const Profile = () => {
   const navigate = useNavigate();
   const deleteBlog = async (id:string) => {
@@ -82,7 +83,7 @@ const Profile = () => {
                       title={blog.title}
                       content={blog.content}
                       authorName={blog.author.name}
-                      publishedDate="2024-06-27"
+                      publishedDate={formatDate(blog.publishedDate)}
                     />
                     <br />
                     <button

@@ -5,6 +5,7 @@ export interface Blog {
   id: string;
   content: string;
   title: string;
+  publishedDate:string,
   author: {
     name: string;
     id:string
@@ -26,7 +27,6 @@ export const useBlog = ({ id }:{ id:string }) => {
       const fetchBlog = async () => {
         const response = await axios.get(`${BACKEND_URL}/api/v1/blog/get/${id}`);
         const data = response.data.blog;
-        console.log(data)
         setBlog(data);
         setLoading(false);
       };
@@ -52,6 +52,7 @@ export const useBlogs = () => {
         const response = await axios.get(`${BACKEND_URL}/api/v1/blog/bulk`);
         const data = response.data.blogs;
         setBlogs(data);
+        console.log("blogs",data)
         // console.log(data[0].author.name)
         setLoading(false);
       };
@@ -67,3 +68,12 @@ export const useBlogs = () => {
   };
 };
 
+export const formatDate = (dateStr: any) => {
+  const date = new Date(dateStr);
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  return date.toLocaleDateString("en-US", options);
+};

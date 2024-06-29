@@ -3,7 +3,6 @@ import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { sign, verify } from "hono/jwt";
 import { signinInput, signupInput } from "@havoncom/medium-model";
-import { use } from "hono/jsx";
 
 export const userRouter = new Hono<{
   Bindings: {
@@ -58,6 +57,7 @@ userRouter.post("/signup", async (c) => {
     console.log(token);
     return c.json({
       jwt: token,
+      user
     });
   } catch (error) {
     c.status(401);
@@ -91,7 +91,7 @@ userRouter.post("/signin", async (c) => {
       return c.json({ error: "user not found" });
     }
     const jwt = await sign({ id: user.id }, c.env.JWT_SECRET);
-    return c.json({ jwt });
+    return c.json({ jwt , user });
   } catch (error) {
     return c.text("invalid");
   }

@@ -1,7 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { BACKEND_URL } from "../config";
+import { useState } from "react";
 function Avatar({ authorName }: { authorName: string }) {
   return (
     <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 p-2">
@@ -13,22 +11,6 @@ function Avatar({ authorName }: { authorName: string }) {
 }
 
 const Appbar = () => {
-  const [username,setUsername] = useState("");
-  useEffect(() => {
-    const fetchUser = async () => {
-      const response = await axios.get(`${BACKEND_URL}/api/v1/user/me`, {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      });
-      console.log("url",response.data.user.profileURL)
-      localStorage.setItem("username",response.data.user.name);
-      localStorage.setItem("userId",response.data.user.id);
-      localStorage.setItem("profile",response.data.user.profileURL);
-      setUsername(response.data.user.name);
-    };
-    fetchUser();
-  }, []);
   const navigate = useNavigate();
   const [logout, showLogout] = useState(false);
  
@@ -51,7 +33,7 @@ const Appbar = () => {
           onClick={() => showLogout(!logout)}
           className="hover:cursor-pointer relative"
         >
-          <Avatar authorName={localStorage.getItem("username")?.charAt(0)||username} />
+          <Avatar authorName={localStorage.getItem("username")?.charAt(0)||""} />
           {logout && (
             <div className="z-20 absolute top-10 right-2 border bg-black border-slate-600 py-3 rounded-lg hover:cursor-pointer">
               <div
