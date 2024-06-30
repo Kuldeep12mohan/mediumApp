@@ -26,14 +26,14 @@ const Profile = () => {
             <div>
               <img
                 className="w-40 h-40 rounded-full"
-                src={localStorage.getItem("profile")||"https://c8.alamy.com/comp/PH4JDM/avatar-icon-avatar-flat-symbol-isolated-on-white-background-avatar-simple-icon-avatar-abstract-icon-in-black-vector-illustration-for-graphic-desig-PH4JDM.jpg"}
+                src={(localStorage.getItem("profile")!='null')?localStorage.getItem("profile") as string:"https://c8.alamy.com/comp/PH4JDM/avatar-icon-avatar-flat-symbol-isolated-on-white-background-avatar-simple-icon-avatar-abstract-icon-in-black-vector-illustration-for-graphic-desig-PH4JDM.jpg"}
               />
             </div>
             <div className="text-3xl font-bold mt-2">
               Hello I'm {localStorage.getItem("username")}
             </div>
             <div className="text-center mt-2 w-1/2">
-              {localStorage.getItem("description") || "I'm a New Blogger"}
+              {(localStorage.getItem("description")!='null')?localStorage.getItem("description") :"I'm a New Blogger"}
               <br />
               <button
                 onClick={()=>
