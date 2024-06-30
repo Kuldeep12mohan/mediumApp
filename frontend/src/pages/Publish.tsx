@@ -30,7 +30,7 @@ const Publish = () => {
               const response = await axios.post(`${BACKEND_URL}/api/v1/blog/post`,{
                 title,
                 content
-              },
+              }, 
             {
               headers:{
                 Authorization:localStorage.getItem('token')
