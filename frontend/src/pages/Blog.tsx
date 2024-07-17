@@ -1,7 +1,16 @@
 import { useBlog } from "../hooks";
 import { useParams } from "react-router-dom";
+import { useContext } from "react";
+import { MyContext } from "../context";
 import FullBlog from "../components/FullBlog";
 const Blog = () => {
+  const context = useContext(MyContext);
+  
+  if (context === undefined) {
+    throw new Error('useMyContext must be used within a MyProvider');
+  }
+
+  const { logout, showLogout } = context;
   const { id } = useParams();
   console.log("id", id);
   const { loading, blog } = useBlog({
@@ -32,7 +41,11 @@ const Blog = () => {
   }
 
   return (
-    <div>
+    <div onClick={()=>{
+      if(logout===true){
+        showLogout(false);
+      }
+    }}>
       <FullBlog blog={blog} />
     </div>
   );

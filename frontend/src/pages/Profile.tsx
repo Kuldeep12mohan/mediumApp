@@ -5,7 +5,16 @@ import { useBlogs } from "../hooks";
 import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
 import { formatDate } from "../hooks";
+import { useContext } from "react";
+import { MyContext } from "../context";
 const Profile = () => {
+  const context = useContext(MyContext);
+  
+  if (context === undefined) {
+    throw new Error('useMyContext must be used within a MyProvider');
+  }
+
+  const { logout, showLogout } = context;
   const navigate = useNavigate();
   const deleteBlog = async (id:string) => {
     console.log(id);
@@ -16,7 +25,11 @@ const Profile = () => {
   let {loading,blogs} = useBlogs();
   
   return (
-    <>
+    <div onClick={()=>{
+      if(logout===true){
+        showLogout(false);
+      }
+    }}>
       <div className="sticky top-0 z-10 bg-white">
         <Appbar />
       </div>
@@ -110,7 +123,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

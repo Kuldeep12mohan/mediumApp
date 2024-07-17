@@ -1,19 +1,26 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-function Avatar({ authorName }: { authorName: string }) {
+import { useContext } from "react";
+import { MyContext } from "../context";
+function Avatar() {
   return (
-    <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 p-2">
-      <span className="text-base text-gray-600 dark:text-gray-300">
-        {authorName}
-      </span>
-    </div>
+    <div>
+    <img
+      className="w-10 h-10 rounded-full"
+      src={(localStorage.getItem("profile")!='null')?localStorage.getItem("profile") as string:"https://c8.alamy.com/comp/PH4JDM/avatar-icon-avatar-flat-symbol-isolated-on-white-background-avatar-simple-icon-avatar-abstract-icon-in-black-vector-illustration-for-graphic-desig-PH4JDM.jpg"}
+    />
+  </div>
   );
 }
 
 const Appbar = () => {
   const navigate = useNavigate();
-  const [logout, showLogout] = useState(false);
- 
+  const context = useContext(MyContext);
+  
+  if (context === undefined) {
+    throw new Error('useMyContext must be used within a MyProvider');
+  }
+
+  const { logout, showLogout } = context;
 
   return (
     <div className="flex justify-between items-center border-b px-10 py-4">
@@ -33,7 +40,7 @@ const Appbar = () => {
           onClick={() => showLogout(!logout)}
           className="hover:cursor-pointer relative"
         >
-          <Avatar authorName={localStorage.getItem("username")?.charAt(0)||""} />
+          <Avatar/>
           {logout && (
             <div className="z-20 absolute top-10 right-2 border bg-black border-slate-600 py-3 rounded-lg hover:cursor-pointer">
               <div

@@ -5,8 +5,17 @@ import { BlogSkeleton } from "../components/BlogSkeleton";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { formatDate } from "../hooks";
+import { useContext } from "react";
+import { MyContext } from "../context";
 const Blogs = () => {
 
+  const context = useContext(MyContext);
+  
+  if (context === undefined) {
+    throw new Error('useMyContext must be used within a MyProvider');
+  }
+
+  const { logout, showLogout } = context;
   const navigate = useNavigate();
   useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -15,7 +24,11 @@ const Blogs = () => {
   }, []);
   const { loading, blogs } = useBlogs();
   return (
-    <>
+    <div onClick={()=>{
+      if(logout===true){
+        showLogout(false);
+      }
+    }}>
       <div className="sticky top-0 bg-white z-10">
         <Appbar />
       </div>
@@ -48,7 +61,7 @@ const Blogs = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
